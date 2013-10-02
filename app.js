@@ -30,7 +30,7 @@ if ('development' == app.get('env')) {
 }
 
 //app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/users', user.list);
 app.get('/', photos.list);
 app.get('/upload', photos.form);
 app.post('/upload', photos.submit(app.get('photos')));
