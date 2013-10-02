@@ -1,15 +1,36 @@
 var vows = require('vows');
 var assert = require('assert');
+var tobi = require('tobi');
 var request = require('request');
 var app = require('../app');
 var http = require('http');
 
 var BASE_URL = 'http://localhost:3000';
+var browser = tobi.createBrowser(3000, 'localhost');
 
-vows.describe('routes').addBatch({
+/*vows.describe('routes').addBatch({
 	'GET /': respondsWith(200),
 	'GET /upload': respondsWith(200)
-}).export(module);
+}).export(module);*/
+
+/*browser.get('/', function(res, $) {
+	//res.should.have.status(200);
+	$('h1').should.have.text('Photos');
+	$('title').should.have.text('Photos');
+});*/
+
+browser.get('/upload', function(res, $) {
+	$('form')
+		.fill({
+			'photo[name]':'test',
+			'photo[image]':'/Users/jacklin/Pictures/me.jpg'
+		}).submit(function(res, $) {
+			console.log(res.statusCode);
+			//res.should.have.status(200);
+			//$('title').should.have.text('Photos');
+			//$('h2').should.not.equal(0);
+		});
+});
 
 
 
@@ -29,6 +50,7 @@ function respondsWith(status) {
 				uri: BASE_URL + path,
 				method: method
 			},this.callback);
+			
         }
     };
     // Create and assign the vow to the context.
